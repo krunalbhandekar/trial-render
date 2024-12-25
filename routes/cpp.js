@@ -4,6 +4,21 @@ const fs = require("fs-extra");
 
 const router = express.Router();
 
+const preprocessUserCode = (userCode) => {
+  // Ensure #include <iostream> exists
+  if (!userCode.includes("#include <iostream>")) {
+    userCode = `#include <iostream>\n` + userCode;
+  }
+
+  // Dynamically inject unbuffered output setting into main function
+  const updatedCode = userCode.replace(
+    /int\s+main\s*\(\s*\)\s*{/,
+    `int main() {\n    std::cout.setf(std::ios::unitbuf);` // Enable unbuffered mode
+  );
+
+  return updatedCode;
+};
+
 router.get("/", async (req, res) => {
   const cppCode = `#include <iostream>
 using namespace std;
@@ -61,8 +76,11 @@ router.post("/", async (req, res) => {
   const { code } = req.body;
 
   try {
+    const processedCode = await preprocessUserCode(code);
+    console.log("check process code", processedCode);
+
     const tempFilePath = "./temp.cpp";
-    await fs.writeFile(tempFilePath, code);
+    await fs.writeFile(tempFilePath, processedCode);
 
     const compileProcess = spawn("g++", [tempFilePath, "-o", "temp"]);
 
