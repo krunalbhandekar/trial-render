@@ -86,7 +86,7 @@ router.post("/", async (req, res) => {
 
     compileProcess.stdout.on("data", (data) => {
       const outputString = data.toString();
-      console.log("Compile Output:", outputString, Date.now());
+      process.stdout.write("Compile Output: " + outputString); // Print to console
     });
 
     compileProcess.stderr.on("data", (data) => {
@@ -99,7 +99,7 @@ router.post("/", async (req, res) => {
 
         execProcess.stdout.on("data", (data) => {
           const outputString = data.toString();
-          console.log("Real-time Output:", outputString, Date.now());
+          process.stdout.write("Real-time Output: " + outputString); // Print to console
         });
 
         execProcess.stderr.on("data", (data) => {
