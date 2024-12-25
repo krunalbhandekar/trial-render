@@ -76,7 +76,7 @@ router.post("/", async (req, res) => {
   const { code } = req.body;
 
   try {
-    const processedCode = await preprocessUserCode(code);
+    const processedCode = code;
     console.log("check process code", processedCode);
 
     const tempFilePath = "./temp.cpp";
