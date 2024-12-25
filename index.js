@@ -41,23 +41,23 @@ app.post("/test-python", (req, res) => {
 
   const pythonProcess = spawn("python3", ["-c", code]);
 
-  let output = "";
-  let error = "";
-
   pythonProcess.stdout.on("data", (data) => {
-    output += data.toString();
-    console.log(" check output", data.toString());
+    const outputString = data.toString();
+    console.log("Real-time Output:", outputString);
   });
 
   pythonProcess.stderr.on("data", (data) => {
-    error += data.toString();
+    console.error("Error:", data.toString());
   });
 
   pythonProcess.on("close", (code) => {
     if (code === 0) {
-      res.json({ success: true, output });
+      res.json({
+        success: true,
+        message: "Python script executed successfully.",
+      });
     } else {
-      res.json({ success: false, error });
+      res.json({ success: false, error: "Python script execution failed." });
     }
   });
 });
