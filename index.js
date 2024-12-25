@@ -43,7 +43,7 @@ app.post("/test-python", (req, res) => {
 
   pythonProcess.stdout.on("data", (data) => {
     const outputString = data.toString();
-    console.log("Real-time Output:", outputString);
+    console.log("Real-time Output:", outputString, Date.now());
   });
 
   pythonProcess.stderr.on("data", (data) => {
