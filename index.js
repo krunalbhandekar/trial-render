@@ -39,7 +39,7 @@ app.post("/test-python", (req, res) => {
     return res.status(400).json({ success: false, error: "No code provided" });
   }
 
-  const pythonProcess = spawn("python3", ["-c", code]);
+  const pythonProcess = spawn("python3", ["-u", "-c", code]);
 
   pythonProcess.stdout.on("data", (data) => {
     const outputString = data.toString();
