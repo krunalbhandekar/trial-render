@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-   "start": "node index.js",
+    "start": "nodemon index.js",
     "build": "bash build.sh"
   },
   "keywords": [],
@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
+    "fs-extra": "^11.2.0",
     "nodemon": "^3.1.9"
   }
 }
