@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Updating package list..."
+ apt-get update
+
 # Check if python3 is installed
 if ! command -v python3 &> /dev/null
 then
@@ -25,6 +28,23 @@ then
     apt-get update && apt-get install -y g++
 else
     echo "g++ is already installed"
+fi
+
+
+# Check if Java is installed
+if ! command -v java &> /dev/null
+then
+    echo "Java could not be found, installing..."
+
+    # Install OpenJDK (Java Development Kit)
+     apt-get install -y openjdk-11-jdk
+
+    # Verify installation
+    echo "Java version:"
+    java -version
+else
+    echo "Java is already installed"
+    java -version
 fi
 
 # Install dependencies
